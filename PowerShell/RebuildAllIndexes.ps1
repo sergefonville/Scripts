@@ -15,6 +15,10 @@ If($SkipSystem -and $SkipStatistics -And $SkipIndexes) {
 Write-Progress -Id 0 -Activity 'Databases' -Status 'Starting' -PercentComplete 0
 $SqlServer = New-Object Microsoft.SqlServer.Management.Smo.Server -ArgumentList $Server
 $Instance = $Server
+If($SqlServer -eq $null) {
+	"{0} is not a valid instance of SQL Server" -f $Server
+	Exit
+}
 If($SqlServer.VersionMajor -lt 10) {
 	"{0} is older than SQL Server 2008" -f $Instance
 	Exit

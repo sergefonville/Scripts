@@ -1,7 +1,3 @@
-Param (
-	[String[]]$HomeFolderBases
-  , [String]$ProfileFolderBase
-)
 $DefaultNamingContext = ([ADSI]"LDAP://RootDSE").defaultNamingContext
 $DirectorySearcher = New-Object System.DirectoryServices.DirectorySearcher $DefaultNamingContext
 $DirectorySearcher.Filter = $("(&(samAccountType={0})(profilePath=*))" -f 805306368)
@@ -23,7 +19,7 @@ ForEach($Result in $Results) {
 	$HomeDirectory = $DirectoryEntry.Properties['homedirectory'] -join ','
 	$User | Add-Member -MemberType NoteProperty  -Name 'HomeDirectory' -Value $HomeDirectory
 	$HomeExists = $false
-	$HomeExists = $(Test-Path $($HomeDirectory + '*'))	
+	$HomeExists = $(Test-Path $($HomeDirectory + '*'))
 	$User | Add-Member -MemberType NoteProperty  -Name 'HomeExists' -Value $HomeExists
 	$User
 }
