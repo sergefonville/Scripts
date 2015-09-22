@@ -17,11 +17,13 @@ Write-Progress -Id 0 -Activity 'Databases' -Status 'Starting' -PercentComplete 0
 $SqlServer = New-Object Microsoft.SqlServer.Management.Smo.Server -ArgumentList $Server
 $Instance = $Server
 If($SqlServer.VersionMajor -lt 10) {
-	"{0} is older than SQL Server 2008" -f $Instance
+	"This script required at least SQL Server 2008, {0} is older" -f $Instance
 	Exit
 }
 $All = [Microsoft.SqlServer.Management.Smo.StatisticsTarget]::All
 $FullScan = [Microsoft.SqlServer.Management.Smo.StatisticsScanType]::FullScan
+$PageCompression = [Microsoft.SqlServer.Management.Smo.DataCompressionType]::Page
+$NoCompression = [Microsoft.SqlServer.Management.Smo.DataCompressionType]::None
 $DatabaseNumber = 0
 ForEach($Database in $SqlServer.Databases) {
 	If(($DB -ne $null) -and ($DB -ne $Database.Name)) {
@@ -46,7 +48,7 @@ ForEach($Database in $SqlServer.Databases) {
 					Continue
 				}
 				ForEach($PhysicalPartition in $Index.PhysicalPartitions) {
-					$PhysicalPartition.DataCompression = [Microsoft.SqlServer.Management.Smo.DataCompressionType]::None
+					$PhysicalPartition.DataCompression = $NoCompression
 					If($Index.IsXmlIndex -eq $true) {
 						"Without data compression because {0}.{1}.{2}.{3} is an XML index" -f $SqlServer, $Database, $Table, $Index
 					}
@@ -54,7 +56,7 @@ ForEach($Database in $SqlServer.Databases) {
 						"Without data compression because {0} isn't Enterprise Edtion" -f $SqlServer
 					}
 					Else {
-						$PhysicalPartition.DataCompression = [Microsoft.SqlServer.Management.Smo.DataCompressionType]::Page
+						$PhysicalPartition.DataCompression = $PageCompression
 					}
 				}
 				$Index.OnlineIndexOperation = $true;
