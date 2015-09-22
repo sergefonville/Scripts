@@ -1,11 +1,19 @@
+<#
+.SYNOPSIS
+Performs SPN Handling
+
+.DESCRIPTION
+This script's purpose is to make it easier to Add, Delete, List and Find SPNs.
+
+#>
 [CmdletBinding()]
 Param(
-	[Parameter(ParameterSetName='List', Mandatory=$true)]
-	[Switch]$List
-  , [Parameter(ParameterSetName='Add', Mandatory=$true)]
+	[Parameter(ParameterSetName='Add', Mandatory=$true)]
 	[Switch]$Add
   , [Parameter(ParameterSetName='Delete', Mandatory=$true)]
 	[Switch]$Delete
+  , [Parameter(ParameterSetName='List', Mandatory=$true)]
+	[Switch]$List
   , [Parameter(ParameterSetName='Find', Mandatory=$true)]
 	[Switch]$Find
   , [Parameter(ParameterSetName='Add', Mandatory=$true)]
@@ -57,7 +65,6 @@ Function Delete {
 	}
 	$DirectoryEntry = $Result.GetDirectoryEntry()
 	$DirectoryEntry.Properties['serviceprincipalname'].Remove($SPN)
-	$DirectoryEntry.Properties['serviceprincipalname'].Remove($SPN)
 	$DirectoryEntry.CommitChanges()
 }
 
@@ -79,8 +86,8 @@ Function Find {
 				Continue
 			}
 			$Result = New-Object -TypeName PSObject
-			$Result | Add-Member -NotePropertyName 'samaccountname' -NotePropertyValue $samaccountname
-			$Result | Add-Member -NotePropertyName 'serviceprincipalname' -NotePropertyValue $ServicePrincipalName
+			$Result | Add-Member -MemberType NoteProperty -Name 'samaccountname' -Value $samaccountname
+			$Result | Add-Member -MemberType NoteProperty -Name 'serviceprincipalname' -Value $ServicePrincipalName
 			$Result
 		}
 	}
