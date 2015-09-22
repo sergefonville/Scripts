@@ -1,20 +1,20 @@
 [CmdletBinding()]
 Param(
-	[Parameter(ParameterSetName='List', Mandatory=$true)]
-	[Switch]$List
-  , [Parameter(ParameterSetName='Add', Mandatory=$true)]
+	[Parameter(ParameterSetName='Add', Mandatory=$true)]
 	[Switch]$Add
   , [Parameter(ParameterSetName='Delete', Mandatory=$true)]
 	[Switch]$Delete
   , [Parameter(ParameterSetName='Find', Mandatory=$true)]
 	[Switch]$Find
+  , [Parameter(ParameterSetName='List', Mandatory=$true)]
+	[Switch]$List
   , [Parameter(ParameterSetName='Add', Mandatory=$true)]
 	[Parameter(ParameterSetName='Delete', Mandatory=$true)]
 	[Parameter(ParameterSetName='Find', Mandatory=$true)]
 	[String]$SPN
-  , [Parameter(ParameterSetName='List', Mandatory=$true)]
 	[Parameter(ParameterSetName='Add', Mandatory=$true)]
 	[Parameter(ParameterSetName='Delete', Mandatory=$true)]
+	[Parameter(ParameterSetName='List', Mandatory=$true)]
 	[String]$PrincipalName
 )
 
@@ -79,8 +79,8 @@ Function Find {
 				Continue
 			}
 			$Result = New-Object -TypeName PSObject
-			$Result | Add-Member -NotePropertyName 'samaccountname' -NotePropertyValue $samaccountname
-			$Result | Add-Member -NotePropertyName 'serviceprincipalname' -NotePropertyValue $ServicePrincipalName
+			$Result | Add-Member -MemberType NoteProperty -Name 'samaccountname' -Value $samaccountname
+			$Result | Add-Member -MemberType NoteProperty -Name 'serviceprincipalname' -Value $ServicePrincipalName
 			$Result
 		}
 	}
