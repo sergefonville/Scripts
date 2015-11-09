@@ -12,7 +12,7 @@ Param(
 	[Parameter(ParameterSetName='Delete', Mandatory=$true)]
 	[Parameter(ParameterSetName='Find', Mandatory=$true)]
 	[String]$SPN
-	[Parameter(ParameterSetName='Add', Mandatory=$true)]
+  , [Parameter(ParameterSetName='Add', Mandatory=$true)]
 	[Parameter(ParameterSetName='Delete', Mandatory=$true)]
 	[Parameter(ParameterSetName='List', Mandatory=$true)]
 	[String]$PrincipalName
@@ -56,7 +56,6 @@ Function Delete {
 		Exit
 	}
 	$DirectoryEntry = $Result.GetDirectoryEntry()
-	$DirectoryEntry.Properties['serviceprincipalname'].Remove($SPN)
 	$DirectoryEntry.Properties['serviceprincipalname'].Remove($SPN)
 	$DirectoryEntry.CommitChanges()
 }
