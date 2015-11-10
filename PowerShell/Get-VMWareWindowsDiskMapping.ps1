@@ -5,6 +5,16 @@ Param(
 	[String]$VMName
 
 )
+If ((Get-PSSnapin -Name VMware.VimAutomation.Core -ErrorAction SilentlyContinue) -eq $null ) {
+    Add-PsSnapin VMware.VimAutomation.Core
+}
+If ( (Get-PSSnapin -Name VMware.VimAutomation.License -ErrorAction SilentlyContinue) -eq $null ) {
+    Add-PsSnapin VMware.VimAutomation.License
+}
+If ( (Get-PSSnapin -Name VMware.DeployAutomation -ErrorAction SilentlyContinue) -eq $null ) {
+    Add-PsSnapin VMware.DeployAutomation
+}
+
 Connect-VIServer -Server $Server | Out-Null
 $VM = Get-VM -Name $VMName -Server $Server | Where-Object {$_.PowerState -eq 'PoweredOn'}
 If($VM -eq $null) {
