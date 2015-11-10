@@ -31,5 +31,5 @@ ForEach($VMHardDisk in $VMHardDisks) {
 	$Result | Add-Member -MemberType NoteProperty -Name 'WindowsDisk' -Value $WinHardDisk.Disk
 	$Result | Add-Member -MemberType NoteProperty -Name 'VMWareUuid' -Value $VMHardDisk.Uuid
 	$Result | Add-Member -MemberType NoteProperty -Name 'WindowsSerialNumber' -Value $WinHardDisk.SerialNumber
-	$Result | Select-Object VMWareDisk,WindowsDisk
+	$Result | Select-Object WindowsDisk,VMWareDisk | Sort-Object -Property WindowsDisk
 }
