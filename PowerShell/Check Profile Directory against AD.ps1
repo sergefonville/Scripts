@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 $ProfileBaseDirectory = 'Path to check'
+=======
+$ProfileBaseDirectory = '\\future.lan\profile$\UTR-HER-Profile'
+>>>>>>> origin/master
 $ProfileDirectories = Get-ChildItem -Path $ProfileBaseDirectory | ?{$_.PsIsContainer -eq $true}
 $DefaultNamingContext = ([ADSI]"LDAP://RootDSE").defaultNamingContext
 $DirectorySearcher = New-Object System.DirectoryServices.DirectorySearcher $DefaultNamingContext
