@@ -25,5 +25,3 @@ Function New-SqlGmsa {
 		-DNSHostName $DNSHostName `
 		-PrincipalsAllowedToRetrieveManagedPassword $PrincipalsAllowedToRetrieveManagedPassword
 }
-New-SqlGmsa -Cluster 'Cluster06' -Instance 'SQL02' -Service 'Database Engine' -ServiceSuffix 'Db' -PrincipalsAllowedToRetrieveManagedPassword 'CCHS-Cluster06-SQL-Nodes'
-New-SqlGmsa -Cluster 'Cluster06' -Instance 'SQL02' -Service 'Agent' -ServiceSuffix 'Ag' -PrincipalsAllowedToRetrieveManagedPassword 'CCHS-Cluster06-SQL-Nodes'
