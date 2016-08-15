@@ -26,7 +26,7 @@ $PageCompression = [Microsoft.SqlServer.Management.Smo.DataCompressionType]::Pag
 $NoCompression = [Microsoft.SqlServer.Management.Smo.DataCompressionType]::None
 $DatabaseNumber = 0
 ForEach($Database in $SqlServer.Databases) {
-	If(($DB -ne $null) -and ($DB -ne $Database.Name)) {
+	If((-Not[String]::IsNullOrEmpty($DB)) -and ($DB -ne $Database.Name)) {
 		Continue
 	}
 	Write-Progress -Id 0 -Activity 'Databases' -Status $Database.Name -PercentComplete $($DatabaseNumber / $SqlServer.Databases.Count * 100)
@@ -36,7 +36,7 @@ ForEach($Database in $SqlServer.Databases) {
 		If(@('master','msdb','tempdb','model') -Contains $Database.Name -and $SkipSystem) {
 			Continue
 		}
-		Else If(@('master','msdb','tempdb','model') -NotContains $Database.Name -And $SkipUser) {
+		ElseIf(@('master','msdb','tempdb','model') -NotContains $Database.Name -And $SkipUser) {
 			Continue
 		}
 		If(-Not $SkipIndexes) {
