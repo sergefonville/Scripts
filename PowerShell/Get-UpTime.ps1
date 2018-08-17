@@ -1,0 +1,2 @@
+$Uptime = [DateTime]::Now - $(Get-WmiObject win32_operatingsystem | %{$_.ConverttoDateTime($_.lastbootuptime)}) | Select-Object Days, Hours, Minutes, Seconds
+"{0} is up for {1} day(s), {2} hour(s), {3} minute(s) and {4} second(s)" -f $env:COMPUTERNAME, $Uptime.Days, $Uptime.Hours, $Uptime.Minutes, $Uptime.Seconds
